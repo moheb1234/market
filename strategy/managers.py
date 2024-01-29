@@ -21,7 +21,8 @@ def strategy_create( **validated_data ):
             settings = Setting.objects.create(**open_ind['settings'])
             del open_ind['settings']
             ind =  Indicator.objects.create(**open_ind)
-            ind.settings = settings
+            settings.indicator = ind
+            settings.save()
             ind.open_str = strategy
             ind.save()
 

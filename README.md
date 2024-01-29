@@ -23,7 +23,7 @@
 <p> now you can run the server.  run 'python manage.py runserver' </p>
 
 
-<h1>Api</h1>
+<!-- <h1>Api</h1>
 
 <p><b>endpoint :</b> user/register/</p>
 <p><b>HttpMethod :</b> = POST</p>
@@ -93,7 +93,7 @@
 <p><b>status:</b> 200 </p>
 <p><b>response data:</b> list all strategy's that created by user</p>
 <p><b>errors:</b> None</p>
-<hr>
+<hr> -->
 
 
 

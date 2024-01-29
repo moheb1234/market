@@ -11,9 +11,10 @@ import random
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True , max_length = 32)
+    message = serializers.CharField(read_only=True)
     class Meta:
         model = Users
-        fields = ['username' , 'email' , 'password' , 'confirm_password']
+        fields = ['username' , 'email' , 'password' , 'confirm_password' , 'message']
         extra_kwargs = {'password':{'write_only':True}}
 
     def create(self , validated_data):
@@ -27,7 +28,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         except Exception:
             user.delete()
             raise Server_Error()
-        return user
+        validated_data['message'] = f'Registration was successful we send a verify code to {user.email} . please check your email'
+        return validated_data
 
     def validate(self , attrs):
         if not check_password(attrs['confirm_password'] , attrs['password']):
@@ -64,7 +66,7 @@ class UserLoginSerializer(serializers.Serializer):
                 raise AuthenticationFailed(detail={'details':'password is wrong'})
             token = AccessToken.for_user(user)
             if not user.is_active:
-                raise PermissionDenied(detail={'details':{'you need to verify your email'}})
+                raise PermissionDenied(detail={'details':'you need to verify your email'})
             validated_data['token'] = token
             return validated_data
         except ObjectDoesNotExist:
