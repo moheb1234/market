@@ -39,13 +39,17 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     
 class UserVerifyEmailSerializer(serializers.Serializer):
-    verify_code = serializers.IntegerField(write_only=True)
 
-    def update(self , instance , validated_data):
-        instance.is_active = True
-        instance.verify_code = None
-        instance.save()
-        return instance
+    def create(self , validated_data):
+        verify_code = self.context['view'].kwargs['verify_code']
+        try:
+            user = Users.objects.get(verify_code= verify_code)
+            user.is_active = True
+            user.verify_code = None
+            user.save()
+            return validated_data
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError(detail= {'details' : 'verify code is invalid'})
 
 
 class UserLoginSerializer(serializers.Serializer):
