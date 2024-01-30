@@ -5,11 +5,10 @@ from rest_framework.exceptions import AuthenticationFailed
 from indicator.serializers import IndicatorSerializer
 from indicator.models import Indicator , Setting
 from .managers import *
-from drf_writable_nested import WritableNestedModelSerializer
 
 
 
-class StrategySerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
+class StrategySerializer(serializers.ModelSerializer):
     open = IndicatorSerializer(many = True , allow_null= True , required=False )
     close = IndicatorSerializer(many = True , allow_null= True , required=False)
     class Meta:
