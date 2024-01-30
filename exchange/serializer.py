@@ -29,7 +29,10 @@ class ExchangeBulkSaveSerializer(serializers.Serializer):
 
     def create(self , validated_data):
         self.delete()
+        created_exchanges = []
         for data in validated_data['exchanges']:
-            ExchangeSerializer.create(self,data)
-        return validated_data
+           exchange =  ExchangeSerializer.create(self,data)
+           created_exchanges.append(ExchangeSerializer(exchange).data)
+        print(created_exchanges)
+        return {'exchanges': created_exchanges}
 
