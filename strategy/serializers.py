@@ -5,10 +5,11 @@ from rest_framework.exceptions import AuthenticationFailed
 from indicator.serializers import IndicatorSerializer
 from indicator.models import Indicator , Setting
 from .managers import *
+from drf_writable_nested import WritableNestedModelSerializer
 
 
 
-class StrategySerializer(serializers.ModelSerializer):
+class StrategySerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
     open = IndicatorSerializer(many = True , allow_null= True , required=False )
     close = IndicatorSerializer(many = True , allow_null= True , required=False)
     class Meta:
@@ -20,6 +21,11 @@ class StrategySerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         validated_data['user'] = user
         return strategy_create(**validated_data)
+    
+    def update(self, instance , validated_data):
+        instance.delete()
+        return self.create(validated_data)
+        
 
 
 class ShortStrategySerializer(serializers.ModelSerializer):  #summery of strategy data
