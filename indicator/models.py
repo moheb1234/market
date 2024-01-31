@@ -31,4 +31,12 @@ class Setting(models.Model):
     rsi_length = models.IntegerField(null= True)   # RSI field
     ma_length = models.IntegerField(null= True)   # RSI field
     rsi_type = models.CharField( max_length=32, null= True)   # RSI field
+    k_length = models.IntegerField(null=True) # stoch field
+    k_smoothing = models.IntegerField(null=True) # stoch field
+    d_smoothing = models.IntegerField(null=True) # stoch field
+    cross_k_d = models.BooleanField(null=True) # stoch field
+    cross_k_upper = models.BooleanField(null=True) # stoch field
+    cross_k_lower = models.BooleanField(null=True) # stoch field
+    cross_k_lower = models.BooleanField(null=True) # stoch field
+    cross_k_upper = models.BooleanField(null=True) # stoch field
     
