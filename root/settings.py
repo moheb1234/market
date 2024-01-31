@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'root.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
+    'default': {
 
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2', 
 
@@ -104,8 +104,6 @@ DATABASES = {
 
     # }
 
-    'default': {
-
         'ENGINE': 'django.db.backends.mysql', 
 
         'NAME': 'market',
@@ -119,6 +117,7 @@ DATABASES = {
         'PORT': '3306',
 
         
+        # 'ENGINE': 'django.db.backends.mysql', 
 
         # 'NAME': 'market',
 
