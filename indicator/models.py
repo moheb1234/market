@@ -30,6 +30,8 @@ class Setting(models.Model):
     lower_band = models.IntegerField(null= True)   # RSI field
     rsi_length = models.IntegerField(null= True)   # RSI field
     ma_length = models.IntegerField(null= True)   # RSI field
+    ma_type = models.CharField(max_length=32 , null=True) # ma field
+    ma_size = models.IntegerField( null=True) # ma field
     rsi_type = models.CharField( max_length=32, null= True)   # RSI field
     k_length = models.IntegerField(null=True) # stoch field
     k_smoothing = models.IntegerField(null=True) # stoch field
