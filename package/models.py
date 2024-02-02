@@ -1,12 +1,15 @@
 from django.db import models
 from users.models import Users
-from datetime import date , datetime
+from datetime import date
+import string , random
+
+
+
 
 class Package(models.Model):
     name = models.CharField(max_length=32 )
     user = models.ForeignKey(Users , on_delete= models.CASCADE)
     package_type = models.CharField(max_length=16)
-    discount_code = models.IntegerField(null= True)
     number_of_exchange = models.IntegerField(null= True)
     number_of_currencies = models.IntegerField(null= True)  # value -1 for all 
     number_of_position_for_each_exchange_in_month = models.IntegerField(null= True)
@@ -34,9 +37,33 @@ class Package(models.Model):
 
 
     def is_expired(self):
+        if self.period_validity is None:
+            return False
         today = date.today()
         difference = today - self.start_data
         if difference.days >= self.period_validity*30:
             return True
         return False
 
+
+
+class Discount(models.Model):
+    package = models.ForeignKey(Package , on_delete = models.CASCADE , related_name = 'dicounts')
+    code = models.CharField(max_length = 16,unique= True)
+    percent = models.IntegerField()
+    descriptions = models.CharField(max_length = 256 , null = True)
+    created_date = models.DateField(auto_now_add = True)
+    period_validity = models.IntegerField(null=True)  # number of days
+
+
+    def generate_code(self):
+        code = ''.join(random.choices(string.ascii_uppercase + string.digits , k = 7))
+        return f'MXJ{code}'
+    
+    def is_expired(self):
+        today = date.today
+        differents = today - self.created_date
+        if differents.days > self.period_validity:
+            return True
+        return False
+    
