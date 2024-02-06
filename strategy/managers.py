@@ -27,11 +27,12 @@ def strategy_create( **validated_data ):
             ind.save()
 
         if len(close_indicators) > 0:
-            for close_ind in close_ind:
-                settings = Setting.objects.create(**open_ind['settings'])
+            for close_ind in close_indicators:
+                settings = Setting.objects.create(**close_ind['settings'])
                 del close_ind['settings']
                 ind =  Indicator.objects.create(**close_ind)
-                ind.settings = settings
+                settings.indicator = ind
+                settings.save()
                 ind.close_str = strategy
                 ind.save()
                 

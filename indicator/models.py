@@ -21,10 +21,6 @@ class Setting(models.Model):
     fast_period = models.IntegerField(null=True)  #macd field
     slow_period = models.IntegerField(null=True)  #macd field
     signal_period = models.IntegerField(null=True) #macd field
-    cross_mcd_zero = models.BooleanField(null=True) # macd admin field
-    cross_sig_zero = models.BooleanField(null=True) # macd admin field
-    cross_macd_zero = models.BooleanField(null=True) # macd admin field
-    cross_mcd_zero = models.BooleanField(null=True) # macd admin field
     cross = models.CharField(max_length=256 , null=True) #macd field
     upper_band = models.IntegerField(null= True)   # RSI field
     lower_band = models.IntegerField(null= True)   # RSI field
@@ -36,9 +32,4 @@ class Setting(models.Model):
     k_length = models.IntegerField(null=True) # stoch field
     k_smoothing = models.IntegerField(null=True) # stoch field
     d_smoothing = models.IntegerField(null=True) # stoch field
-    cross_k_d = models.BooleanField(null=True) # stoch field
-    cross_k_upper = models.BooleanField(null=True) # stoch field
-    cross_k_lower = models.BooleanField(null=True) # stoch field
-    cross_k_lower = models.BooleanField(null=True) # stoch field
-    cross_k_upper = models.BooleanField(null=True) # stoch field
     

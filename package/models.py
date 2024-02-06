@@ -48,7 +48,7 @@ class Package(models.Model):
 
 
 class Discount(models.Model):
-    package = models.ForeignKey(Package , on_delete = models.CASCADE , related_name = 'dicounts')
+    package = models.ForeignKey(Package , on_delete = models.CASCADE , related_name = 'discounts')
     code = models.CharField(max_length = 16,unique= True)
     percent = models.IntegerField()
     descriptions = models.CharField(max_length = 256 , null = True)
@@ -62,8 +62,8 @@ class Discount(models.Model):
     
     def is_expired(self):
         today = date.today
-        differents = today - self.created_date
-        if differents.days > self.period_validity:
+        difference = today - self.created_date
+        if difference.days > self.period_validity:
             return True
         return False
     

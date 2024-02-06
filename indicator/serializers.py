@@ -5,7 +5,7 @@ from .models import Setting , Indicator
 class SettingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Setting
-        fields = '__all__'
+        exclude = ['indicator']
 
 
 class IndicatorSerializer(serializers.ModelSerializer):
