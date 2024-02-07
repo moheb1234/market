@@ -11,7 +11,7 @@ class AssetPositionSerializer(serializers.ModelSerializer):
     
 
 class ExportSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(required= True  , write_only= True)
+    password = serializers.CharField(required= True  , write_only= True )
     asset_position_list = AssetPositionSerializer(many = True)
 
     class Meta:

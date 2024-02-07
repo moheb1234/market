@@ -6,14 +6,13 @@ class Indicator(models.Model):
     type = models.CharField(max_length=16)
     open_str = models.ForeignKey(Strategy , on_delete= models.CASCADE , related_name= 'open' , null= True)
     close_str = models.ForeignKey(Strategy , on_delete= models.CASCADE , related_name= 'close' , null= True)
+
+class Setting(models.Model):
+    indicator = models.OneToOneField(to= Indicator , on_delete=models.CASCADE , related_name='settings' , null=True)
     time_frame = models.CharField(max_length=8)
     buy_sell = models.CharField(max_length=16)
     keep_signal = models.IntegerField()
     necessary = models.BooleanField()
-
-
-class Setting(models.Model):
-    indicator = models.OneToOneField(to= Indicator , on_delete=models.CASCADE , related_name='settings' , null=True)
     long_period = models.IntegerField(null=True)
     OHLCV_value = models.CharField(max_length=128 , null=True)
     short_period  = models.IntegerField(null=True)  

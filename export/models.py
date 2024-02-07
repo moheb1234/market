@@ -2,7 +2,24 @@ from django.db import models
 from bot.models import Bot
 
 
-# get data from logic 
+class IndicatorExport(models.Model):
+    open = models.FloatField()
+    high = models.FloatField()
+    low = models.FloatField()
+    close = models.FloatField()
+    ema12 = models.FloatField()
+    ema26 = models.FloatField()
+    macd = models.FloatField()
+    signal = models.FloatField()
+    macd_cross_signal = models.IntegerField()
+    macd_cross_zero = models.IntegerField()
+    signal_cross_zero = models.IntegerField()
+    consider = models.IntegerField()
+    k = models.FloatField(null=True , name= '%k') 
+    d = models.FloatField(null=True , name= '%D') 
+
+
+#  get data from logic 
 class Export(models.Model):
     bot = models.ForeignKey(to= Bot , on_delete= models.CASCADE)
     total_positions = models.IntegerField(null=True)
