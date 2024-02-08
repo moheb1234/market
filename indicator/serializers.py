@@ -20,5 +20,5 @@ class IndicatorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Indicator
-        exclude = ['open_str' , 'close_str']
+        fields = ['name' , 'type' , 'settings']
     

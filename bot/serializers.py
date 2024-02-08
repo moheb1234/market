@@ -24,11 +24,8 @@ class BotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bot
-        fields = '__all__'
-        extra_kwargs = {
-        'exchange':{'write_only':True} ,
-        'strategy':{'write_only':True}
-    }
+        fields = ['id' ,'name' , 'leverage' , 'order_amount' , 'stop_loss' ,'take_profit' , 'watch_dog' , 'trade_now' 
+        , 'start_date' , 'end_date' ,'strategy' , 'exchange' , 'asset_list_names']
     
     # send bot data to indicator 
     def send_bot_data(self,bot):
@@ -43,6 +40,6 @@ class BotSerializer(serializers.ModelSerializer):
         strategy_id = self.context['view'].kwargs['str_id']
         exchange_id = self.context['view'].kwargs['ex_id']
         bot = bot_create(strategy_id , exchange_id , **validated_data)
-        self.send_bot_data(bot)
+        # self.send_bot_data(bot)
         return bot
         

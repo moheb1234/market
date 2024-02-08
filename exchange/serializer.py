@@ -33,6 +33,5 @@ class ExchangeBulkSaveSerializer(serializers.Serializer):
         for data in validated_data['exchanges']:
            exchange =  ExchangeSerializer.create(self,data)
            created_exchanges.append(ExchangeSerializer(exchange).data)
-        print(created_exchanges)
         return {'exchanges': created_exchanges}
 

@@ -13,7 +13,8 @@ class StrategySerializer(serializers.ModelSerializer):
     close = IndicatorSerializer(many = True , allow_null= True , required=False)
     class Meta:
         model = Strategy
-        fields = '__all__'
+        fields = ['name' , 'image' , 'description' , 'min_price_allow' , 'max_price_allow' , 'min_sig_for_open' ,
+        'min_sig_for_close' , 'user' , 'open' , 'close' ]
         read_only_fields = ['user']
     
     
