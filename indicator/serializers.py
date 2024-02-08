@@ -20,5 +20,5 @@ class IndicatorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Indicator
-        fields = ['name' , 'type' , 'settings']
+        fields = ['id' , 'name' , 'type' , 'settings']
     
