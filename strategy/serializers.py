@@ -1,9 +1,6 @@
 from rest_framework import serializers
 from .models import Strategy 
-from django.contrib.auth.models import User
-from rest_framework.exceptions import AuthenticationFailed
 from indicator.serializers import IndicatorSerializer
-from indicator.models import Indicator , Setting
 from .managers import *
 
 
@@ -22,6 +19,7 @@ class StrategySerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         validated_data['user'] = user
         return strategy_create(**validated_data)
+        
     
     def update(self, instance , validated_data):
         instance.delete()

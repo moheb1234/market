@@ -3,7 +3,6 @@ from.models import Bot , Asset
 from users.exceptions import Server_Error
 from strategy.serializers import StrategySerializer
 from exchange.serializer import ExchangeSerializer
-from django.forms.models import model_to_dict
 from .managers import bot_create
 import requests
 import json

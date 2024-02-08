@@ -7,6 +7,15 @@ class Indicator(models.Model):
     open_str = models.ForeignKey(Strategy , on_delete= models.CASCADE , related_name= 'open' , null= True)
     close_str = models.ForeignKey(Strategy , on_delete= models.CASCADE , related_name= 'close' , null= True)
 
+
+
+aggregated_settings = {
+            'MACD' : ['fast_period','slow_period','signal_period' ],
+            'RSI' : ['upper_band' , 'lower_band' , 'rsi_length'],
+            'MA' : ['ma_type' , 'ma_size'] ,
+            'STOCH' : ['k_length' , 'k_smoothing' , 'd_smoothing']
+        }
+
 class Setting(models.Model):
     indicator = models.OneToOneField(to= Indicator , on_delete=models.CASCADE , related_name='settings' , null=True)
     time_frame = models.CharField(max_length=8)
@@ -32,3 +41,5 @@ class Setting(models.Model):
     k_smoothing = models.IntegerField(null=True) # stoch field
     d_smoothing = models.IntegerField(null=True) # stoch field
     
+
+    s = 56
