@@ -11,7 +11,7 @@ class Indicator(models.Model):
 
 aggregated_settings = {
             'MACD' : ['fast_period','slow_period','signal_period' ],
-            'RSI' : ['upper_band' , 'lower_band' , 'rsi_length'],
+            'RSI' : ['upper_band' , 'lower_band' ,],
             'MA' : ['ma_type' , 'ma_size'] ,
             'STOCH' : ['k_length' , 'k_smoothing' , 'd_smoothing']
         }
@@ -32,7 +32,6 @@ class Setting(models.Model):
     cross = models.CharField(max_length=256 , null=True) #macd field
     upper_band = models.IntegerField(null= True)   # RSI field
     lower_band = models.IntegerField(null= True)   # RSI field
-    rsi_length = models.IntegerField(null= True)   # RSI field
     ma_length = models.IntegerField(null= True)   # RSI field
     ma_type = models.CharField(max_length=32 , null=True) # ma field
     ma_size = models.IntegerField( null=True) # ma field

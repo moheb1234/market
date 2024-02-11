@@ -9,9 +9,9 @@ class SettingSerializer(serializers.ModelSerializer):
         exclude = ['indicator']
 
     
-    def pop_unused_field(self , name ,ret):
+    def pop_unused_field(self , keep_indicator ,ret):
         for indicator , fields in aggregated_settings.items():
-                if indicator == name:
+                if indicator == keep_indicator:
                     continue
                 else:
                     for field in fields:

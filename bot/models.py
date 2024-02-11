@@ -9,6 +9,7 @@ class Bot(models.Model):
     exchange = models.ForeignKey(to= Exchange ,on_delete= models.CASCADE)
     strategy = models.ForeignKey(to= Strategy , on_delete= models.CASCADE )
     name = models.CharField(max_length=100 , blank=False)
+    trade_market = models.CharField(max_length=32 , null=True)
     leverage = models.FloatField()
     order_amount = models.FloatField()
     stop_loss = models.FloatField()
