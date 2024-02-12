@@ -24,7 +24,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user.verify_code = random.randint(100000,999999)
         user.save()
         try:
-            send_verify_code(email= user.email , verify_code= user.verify_code)
+            send_verify_code(email= user.email , verify_code= user.verify_code , username= user.username)
         except Exception:
             user.delete()
             raise Server_Error()
