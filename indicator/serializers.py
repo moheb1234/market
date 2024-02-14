@@ -19,18 +19,12 @@ class SettingSerializer(serializers.ModelSerializer):
     
     def to_representation(self, instance):
         ret = super(SettingSerializer , self).to_representation(instance)
-        if instance.indicator.name == 'RSI':
-            self.pop_unused_field('RSI' , ret)
-        
-        elif instance.indicator.name == 'MACD':
-            self.pop_unused_field('MACD', ret)
-        
-        elif instance.indicator.name == 'Ma':
-            self.pop_unused_field('MA' , ret)
-
-        elif instance.indicator.name == 'STOCH':
-            self.pop_unused_field('STOCH' , ret)
-        
+        indicator_name = instance.indicator.name
+        if indicator_name.startswith('Relative Strength Index'):
+            
+            indicator_name = 'Relative Strength Index'
+        if indicator_name in aggregated_settings.keys():
+            self.pop_unused_field(indicator_name , ret)        
         return ret
         
 

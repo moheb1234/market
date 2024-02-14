@@ -10,10 +10,10 @@ class Indicator(models.Model):
 
 
 aggregated_settings = {
-            'MACD' : ['fast_period','slow_period','signal_period' ],
-            'RSI' : ['upper_band' , 'lower_band' ,],
-            'MA' : ['ma_type' , 'ma_size'] ,
-            'STOCH' : ['k_length' , 'k_smoothing' , 'd_smoothing']
+            'Moving Average Convergence Divergence (MACD)' : ['fast_period','slow_period','signal_period' ],
+            'Relative Strength Index (RSI)' : ['upper_band' , 'lower_band' , 'ma_length' ],
+            'Moving Average (MA)' : ['ma_type' , 'ma_size'] ,
+            'Stochastic' : ['k_length' , 'k_smoothing' , 'd_smoothing']
         }
 
 class Setting(models.Model):
@@ -29,16 +29,13 @@ class Setting(models.Model):
     fast_period = models.IntegerField(null=True)  #macd field
     slow_period = models.IntegerField(null=True)  #macd field
     signal_period = models.IntegerField(null=True) #macd field
-    cross = models.CharField(max_length=256 , null=True) #macd field
+    cross = models.CharField(max_length=256 , null=True) 
     upper_band = models.IntegerField(null= True)   # RSI field
     lower_band = models.IntegerField(null= True)   # RSI field
-    ma_length = models.IntegerField(null= True)   # RSI field
+    ma_length = models.IntegerField(null= True)   # RSI ma field
     ma_type = models.CharField(max_length=32 , null=True) # ma field
     ma_size = models.IntegerField( null=True) # ma field
-    rsi_type = models.CharField( max_length=32, null= True)   # RSI field
     k_length = models.IntegerField(null=True) # stoch field
     k_smoothing = models.IntegerField(null=True) # stoch field
     d_smoothing = models.IntegerField(null=True) # stoch field
     
-
-    s = 56
