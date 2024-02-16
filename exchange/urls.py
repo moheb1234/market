@@ -3,5 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    path('list-save' , views.ExchangeListSaveApiView.as_view() , name = 'exchange-list-save')
+    path('bulk-save' , views.ExchangebulkSaveApiView.as_view() , name = 'exchange-bulk-save'),
+    path('list' , views.ExchangeListApiView.as_view() , name = 'exchange-list')
 ]

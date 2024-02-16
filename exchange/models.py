@@ -7,7 +7,7 @@ class Exchange(models.Model):
     account_name = models.CharField(max_length=32)
     api_key = models.CharField(max_length=128, null=True)
     secret_key = models.CharField(max_length=128, null=True)
-    max_allow_position = models.IntegerField()
+    ip_address = models.CharField(max_length = 64 , null =True)
 
     # class Meta:
     #     unique_together = ('exchange_name' , 'account_name')
