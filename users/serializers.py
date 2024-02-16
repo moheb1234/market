@@ -51,7 +51,7 @@ class UserVerifyEmailSerializer(serializers.Serializer):
             user.save()
             return validated_data
         except ObjectDoesNotExist:
-            raise serializers.ValidationError(detail= {'details' : 'verify code is invalid'})
+            raise serializers.ValidationError(detail= {'detail' : 'verify code is invalid'})
 
 
 class UserLoginSerializer(serializers.Serializer):
@@ -63,14 +63,14 @@ class UserLoginSerializer(serializers.Serializer):
         try:
             user = Users.objects.get(username= validated_data['username'])
             if not check_password(validated_data['password'] , user.password):
-                raise AuthenticationFailed(detail={'details':'password is wrong'})
+                raise AuthenticationFailed(detail={'detail':'password is wrong'})
             token = AccessToken.for_user(user)
             if not user.is_active:
-                raise PermissionDenied(detail={'details':'you need to verify your email'})
+                raise PermissionDenied(detail={'detail':'you need to verify your email'})
             validated_data['token'] = token
             return validated_data
         except ObjectDoesNotExist:
-            raise NotFound(detail= {'details':'no user founded'})
+            raise NotFound(detail= {'detail':'no user founded'})
 
 
 

@@ -25,11 +25,11 @@ def bot_create(**validated_data):
     try:
         strategy = Strategy.objects.get(pk = validated_data['strategy_id'])
     except ObjectDoesNotExist:
-        raise NotFound(detail={'details':'no strategy founded'})
+        raise NotFound(detail={'detail':'no strategy founded'})
     try:
         exchange = Exchange.objects.get(pk = validated_data['exchange_id'])
     except ObjectDoesNotExist:
-        raise NotFound(detail={'details':'no exchange founded'})
+        raise NotFound(detail={'detail':'no exchange founded'})
 
     validated_data['strategy'] = strategy
     validated_data['exchange'] = exchange

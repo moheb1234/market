@@ -15,7 +15,7 @@ def strategy_create( **validated_data ):
         try:
             strategy =  Strategy.objects.create(**validated_data)
         except IntegrityError:
-            raise ValidationError({'details':'strategy name is duplicate please chose an other name'})
+            raise ValidationError({'detail':'strategy name is duplicate please chose an other name'})
 
         for open_ind in open_indicators:
             settings = Setting.objects.create(**open_ind['settings'])
