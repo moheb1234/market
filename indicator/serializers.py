@@ -5,15 +5,17 @@ import json
 
 
 class SettingSerializer(serializers.ModelSerializer):
-    cross = serializers.ListField()
+    cross = serializers.ListField(required=False)
     class Meta:
         model = Setting
         exclude = ['indicator']
 
     
     def validate_cross(self , value):
-        str_cross = ','.join(map(str,value))
-        return str_cross
+        if value:
+            str_cross = ','.join(value)
+            return str_cross
+        return None
 
     
     def pop_unused_field(self , keep_indicator ,ret):
@@ -31,7 +33,8 @@ class SettingSerializer(serializers.ModelSerializer):
             indicator_name = 'Relative Strength Index (RSI)'
         if indicator_name in aggregated_settings.keys():
             self.pop_unused_field(indicator_name , ret)
-        ret['cross'] = json.loads(f'[{instance.cross}]')        
+        if instance.cross is not None:
+            ret['cross'] = instance.cross.split(',')       
         return ret
         
 
