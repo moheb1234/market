@@ -22,7 +22,9 @@ class StrategySerializer(serializers.ModelSerializer):
         
     
     def update(self, instance , validated_data):
+        pk = instance.id
         instance.delete()
+        validated_data['id'] = pk
         return self.create(validated_data)
         
 
