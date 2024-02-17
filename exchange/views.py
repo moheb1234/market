@@ -3,7 +3,7 @@ from .serializer import ExchangeBulkSaveSerializer ,ExchangeSerializer
 from rest_framework.permissions import IsAuthenticated
 from .models import Exchange
 
-class ExchangebulkSaveApiView(generics.CreateAPIView):
+class ExchangeBulkSaveApiView(generics.CreateAPIView):
     serializer_class = ExchangeBulkSaveSerializer
     permission_classes = [IsAuthenticated]
     queryset = Exchange.objects.all()
