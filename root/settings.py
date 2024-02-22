@@ -110,7 +110,7 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql', 
 
-        'NAME': 'market',
+        'NAME': 'markettest',
 
         'USER': 'root',
 
@@ -197,7 +197,7 @@ REST_FRAMEWORK = {
     )
 }
 
-try:
-    from .local_settings import *
-except Exception:
-    pass
+# try:
+#     from .local_settings import *
+# except Exception:
+#     pass

@@ -1,4 +1,4 @@
-from indicator.models import Setting,Indicator
+from indicator.models import Setting,Indicator ,MACD
 from .models import Strategy
 from django.db import IntegrityError
 from rest_framework.exceptions import ValidationError
@@ -16,24 +16,27 @@ def strategy_create( **validated_data ):
             strategy =  Strategy.objects.create(**validated_data)
         except IntegrityError:
             raise ValidationError({'detail':'strategy name is duplicate please chose an other name'})
-
-        for open_ind in open_indicators:
-            settings = Setting.objects.create(**open_ind['settings'])
-            del open_ind['settings']
-            ind =  Indicator.objects.create(**open_ind)
-            settings.indicator = ind
-            settings.save()
-            ind.open_str = strategy
-            ind.save()
+        if len(open_indicators) > 0:
+            for open_ind in open_indicators:
+                if open_ind['name'] == 'Moving Average Convergence Divergence (MACD)' :
+                    del open_ind['settings']['resourcetype']
+                    macd = MACD.objects.create(**open_ind['settings'])
+                    del open_ind['settings']
+                    ind =  Indicator.objects.create(**open_ind)
+                    macd.indicator = ind
+                    macd.save()
+                    ind.open_str = strategy
+                    ind.save()
 
         if len(close_indicators) > 0:
             for close_ind in close_indicators:
-                settings = Setting.objects.create(**close_ind['settings'])
-                del close_ind['settings']
-                ind =  Indicator.objects.create(**close_ind)
-                settings.indicator = ind
-                settings.save()
-                ind.close_str = strategy
-                ind.save()
-                
+                if close_ind['name'] == 'Moving Average Convergence Divergence (MACD)':
+                    del close_ind['settings']['resourcetype']
+                    macd = MACD.objects.create(**close_ind['settings'])
+                    del close_ind['settings']
+                    ind =  Indicator.objects.create(**close_ind)
+                    macd.indicator = ind
+                    macd.save()
+                    ind.close_str = strategy
+                    ind.save()
         return strategy

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Setting , Indicator
+from .models import Setting , Indicator , MACD
 
 admin.site.register(Indicator)
 admin.site.register(Setting)
+admin.site.register(MACD)
