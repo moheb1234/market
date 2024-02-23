@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .serializer import ExchangeBulkSaveSerializer ,ExchangeSerializer
+from .serializer import ExchangeBulkSaveSerializer ,ExchangeSerializer ,ServerIpAddressSerializer
 from rest_framework.permissions import IsAuthenticated
 from .models import Exchange
 
@@ -14,5 +14,9 @@ class ExchangeListApiView(generics.ListAPIView):
 
     def get_queryset(self):
         return Exchange.objects.filter(user = self.request.user)
+
+
+class ServerIpAddressApiView(generics.CreateAPIView):
+    serializer_class = ServerIpAddressSerializer
 
     

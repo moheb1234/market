@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Exchange
 from users.serializers import UserRegisterSerializer
+import socket
 
 class ExchangeSerializer(serializers.ModelSerializer):
 
@@ -35,3 +36,24 @@ class ExchangeBulkSaveSerializer(serializers.Serializer):
            created_exchanges.append(ExchangeSerializer(exchange).data)
         return {'exchanges': created_exchanges}
 
+
+class ServerIpAddressSerializer(serializers.Serializer):
+    ip_address = serializers.CharField(read_only= True)
+    password = serializers.CharField(write_only=True)
+
+
+    def validate_password(self , value):
+        if not value == 'Negar12345$#':
+            raise serializers.ValidationError({'detail':'password is wrong'})
+        return value
+
+    def create(self , validated_data):
+        host = socket.gethostname()
+        ip_addr = socket.gethostbyname(host)
+        validated_data['ip_address'] = ip_addr
+        return validated_data        
+
+
+
+
+    
