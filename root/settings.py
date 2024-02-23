@@ -110,7 +110,7 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql', 
 
-        'NAME': 'markettest',
+        'NAME': 'market',
 
         'USER': 'root',
 
