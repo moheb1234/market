@@ -19,7 +19,7 @@ def strategy_create( **validated_data ):
         if len(open_indicators) > 0:
             for open_ind in open_indicators:
                 if open_ind['name'] == 'Moving Average Convergence Divergence (MACD)' :
-                    del open_ind['settings']['resourcetype']
+                    del open_ind['settings']['ind']
                     macd = MACD.objects.create(**open_ind['settings'])
                     del open_ind['settings']
                     ind =  Indicator.objects.create(**open_ind)
@@ -31,7 +31,7 @@ def strategy_create( **validated_data ):
         if len(close_indicators) > 0:
             for close_ind in close_indicators:
                 if close_ind['name'] == 'Moving Average Convergence Divergence (MACD)':
-                    del close_ind['settings']['resourcetype']
+                    del close_ind['settings']['ind']
                     macd = MACD.objects.create(**close_ind['settings'])
                     del close_ind['settings']
                     ind =  Indicator.objects.create(**close_ind)
