@@ -9,36 +9,13 @@ class Indicator(models.Model):
     close_str = models.ForeignKey(Strategy , on_delete= models.CASCADE , related_name= 'close' , null= True)
 
 
-
-aggregated_settings = {
-            'Moving Average Convergence Divergence (MACD)' : ['fast_period','slow_period','signal_period' ],
-            'Relative Strength Index (RSI)' : ['upper_band' , 'lower_band' , 'ma_length' ],
-            'Moving Average (MA)' : ['ma_type' , 'ma_size'] ,
-            'Stochastic' : ['k_length' , 'k_smoothing' , 'd_smoothing']
-        }
-
 class Setting(PolymorphicModel):
     indicator = models.OneToOneField(to= Indicator , on_delete=models.CASCADE , related_name='settings' , null=True)
     time_frame = models.CharField(max_length=8 , default='4h')
     buy_sell = models.CharField(max_length=16 , default= ' both')
     keep_signal = models.CharField(max_length=16 ,default='0')
     necessary = models.BooleanField(default= True)
-    # long_period = models.IntegerField(null=True)
-    # OHLCV_value = models.CharField(max_length=128 , null=True)
-    # short_period  = models.IntegerField(null=True)  
-    # consider = models.BooleanField(null=True) 
-    # fast_period = models.IntegerField(null=True)  #macd field
-    # slow_period = models.IntegerField(null=True)  #macd field
-    # signal_period = models.IntegerField(null=True) #macd field
-    # cross = models.CharField(max_length=256 , null=True) 
-    # upper_band = models.IntegerField(null= True)   # RSI field
-    # lower_band = models.IntegerField(null= True)   # RSI field
-    # ma_length = models.IntegerField(null= True)   # RSI ma field
-    # ma_type = models.CharField(max_length=32 , null=True) # ma field
-    # ma_size = models.IntegerField( null=True) # ma field
-    # k_length = models.IntegerField(null=True) # stoch field
-    # k_smoothing = models.IntegerField(null=True) # stoch field
-    # d_smoothing = models.IntegerField(null=True) # stoch field
+ 
 
 class MACD(Setting):
     OHLCV_value = models.CharField(max_length=128 , default= 'close')
@@ -47,6 +24,69 @@ class MACD(Setting):
     signal_smoothing  = models.IntegerField(default=9) 
     cross = models.CharField(max_length= 128 , default='' , null= True)
     consider = models.BooleanField(default=False , null= True) 
+
+class RSI(Setting):
+    ohlcv_value   = models.CharField(max_length=16 , default= 'close')
+    rsi_length  = models.IntegerField(default=14)
+    signal_upper_band =  models.IntegerField(default=70)
+    signal_lower_band = models.IntegerField(default=30)
+
+class RSICross(Setting):
+    ohlcv_value   = models.CharField(max_length=16 , default= 'close')
+    rsi_length  = models.IntegerField(default=14)
+    signal_upper_grater =  models.IntegerField(default=70)
+    signal_lower_less = models.IntegerField(default=30)
+
+class RSIMa(Setting):
+    ohlcv_value   = models.CharField(max_length=16 , default= 'close')
+    rsi_length  = models.IntegerField(default=14)
+    signal_upper_band =  models.IntegerField(default=70)
+    signal_lower_band = models.IntegerField(default=30)
+    ma_type = models.CharField(max_length=32 , default='EMA')
+    ma_length = models.IntegerField(default=14)
+    cross = models.CharField(max_length=128) 
+    consider = models.BooleanField(default=False)
+
+class MA(Setting):
+    ohlcv_value   = models.CharField(max_length=16 , default= 'close')
+    ma_type = models.CharField(max_length=32 , default='EMA')
+    ma_sizes = models.CharField(max_length=128)
+    
+
+
+class OBV(Setting):
+    ma_type_obv = models.CharField(max_length=32 , default='EMA')
+    length = models.IntegerField(default=5)
+    cross_with_zero = models.BooleanField(default=True)
+    ma_type = models.CharField(max_length=32 , default='EMA' , null= True)
+    ma_length = models.IntegerField(default=14 , null= True)
+    cross = models.CharField(max_length=128 , null= True)
+    consider = models.BooleanField(default=False , null= True)
+
+
+class STD(Setting):
+    ohlcv_value   = models.CharField(max_length=16 , default= 'close')
+    length = models.IntegerField(default=20)
+    callback =models.IntegerField(default=100)
+    price_percent = models.IntegerField(default=60)
+    ma_type = models.CharField(max_length=32 , default= 'EMA' , null= True)
+    ma_length  = models.IntegerField(default=14 , null= True)
+
+
+class Stochastic(Setting):
+    k_length  = models.IntegerField(default=14)
+    k_smooth  = models.IntegerField(default=3)
+    d_smooth = models.IntegerField(default=7)
+    signal_upper_band = models.IntegerField(default=80)
+    signal_lower_band = models.IntegerField(default=20)
+    consider = models.BooleanField(default=False)
+    cross_k_d = models.BooleanField(default=False)
+    for_buy_lower_upper  = models.CharField(max_length=128)
+    for_buy_lower  = models.CharField(max_length=128)
+    for_sell_lower_upper  = models.CharField(max_length=128)
+    for_sell_upper  = models.CharField(max_length=128)
+
+
 
     
 
