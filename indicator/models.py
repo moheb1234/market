@@ -34,7 +34,7 @@ class RSI(Setting):
 class RSICross(Setting):
     ohlcv_value   = models.CharField(max_length=16 , default= 'close')
     rsi_length  = models.IntegerField(default=14)
-    signal_upper_grater =  models.IntegerField(default=70)
+    signal_upper_greater =  models.IntegerField(default=70)
     signal_lower_less = models.IntegerField(default=30)
 
 class RSIMa(Setting):
@@ -81,10 +81,10 @@ class Stochastic(Setting):
     signal_lower_band = models.IntegerField(default=20)
     consider = models.BooleanField(default=False)
     cross_k_d = models.BooleanField(default=False)
-    for_buy_lower_upper  = models.CharField(max_length=128)
-    for_buy_lower  = models.CharField(max_length=128)
-    for_sell_lower_upper  = models.CharField(max_length=128)
-    for_sell_upper  = models.CharField(max_length=128)
+    for_buy_lower_upper  = models.CharField(max_length=128, default='' , null= True)
+    for_buy_lower  = models.CharField(max_length=128 , default='' , null= True)
+    for_sell_lower_upper  = models.CharField(max_length=128 , default='' , null= True)
+    for_sell_upper  = models.CharField(max_length=128 , default='' , null= True)
 
 
 

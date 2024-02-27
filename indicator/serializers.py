@@ -102,34 +102,58 @@ class STDSerializer(serializers.ModelSerializer):
 
 
 class StochasticSerializer(serializers.ModelSerializer):
-    for_buy_lower_upper = serializers.ListField()
-    for_buy_lower = serializers.ListField()
-    for_sell_lower_upper = serializers.ListField()
-    for_sell_upper = serializers.ListField()
+    for_buy_lower_upper = serializers.ListField(required = False)
+    for_buy_lower = serializers.ListField(required = False)
+    for_sell_lower_upper = serializers.ListField(required = False)
+    for_sell_upper = serializers.ListField(required = False)
 
     class Meta:
         model = Stochastic
         exclude = ['indicator' , 'polymorphic_ctype' ]
 
     def validate_for_buy_lower_upper(self ,value):
-        return json.dumps(value)
+        if value is not None:
+            return json.dumps(value)
+        return ''
     
     def validate_for_buy_lower(self ,value):
-        return json.dumps(value)
+        if value is not None:
+            return json.dumps(value)
+        return ''
 
     def validate_for_sell_lower_upper(self ,value):
-        return json.dumps(value)
+        if value is not None:
+            return json.dumps(value)
+        return ''
 
     def validate_for_sell_upper(self ,value):
-        return json.dumps(value)
+        if value is not None:
+            return json.dumps(value)
+        return ''
     
 
     def to_representation(self , instance):
         ret = super(StochasticSerializer , self).to_representation(instance)
-        ret['for_buy_lower_upper'] = json.loads(instance.for_buy_lower_upper)
-        ret['for_buy_lower'] = json.loads(instance.for_buy_lower)
-        ret['for_sell_lower_upper'] = json.loads(instance.for_sell_lower_upper)
-        ret['for_sell_upper'] = json.loads(instance.for_sell_upper)
+        if instance.for_buy_lower_upper == '' :
+            ret.pop('for_buy_lower_upper')
+        else:
+            ret['for_buy_lower_upper'] = json.loads(instance.for_buy_lower_upper)
+            
+        if instance.for_buy_lower == '' :
+            ret.pop('for_buy_lower')
+        else:
+            ret['for_buy_lower'] = json.loads(instance.for_buy_lower)
+
+        if instance.for_sell_lower_upper == '' :
+            ret.pop('for_sell_lower_upper')
+        else:
+            ret['for_sell_lower_upper'] = json.loads(instance.for_sell_lower_upper)
+        
+        if instance.for_sell_upper == '' :
+            ret.pop('for_sell_upper')
+        else:
+            ret['for_sell_upper'] = json.loads(instance.for_sell_upper)
+
         return ret
 
 class SettingPolymorphicSerializer(PolymorphicSerializer):
