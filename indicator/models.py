@@ -18,7 +18,7 @@ class Setting(PolymorphicModel):
  
 
 class MACD(Setting):
-    OHLCV_value = models.CharField(max_length=128 , default= 'close')
+    ohlcv_value = models.CharField(max_length=128 , default= 'close')
     fast_length = models.IntegerField(default=12)  
     slow_length = models.IntegerField(default = 26)  
     signal_smoothing  = models.IntegerField(default=9) 
