@@ -18,5 +18,8 @@ class ExchangeListApiView(generics.ListAPIView):
 
 class ServerIpAddressApiView(generics.CreateAPIView):
     serializer_class = ServerIpAddressSerializer
+    permission_classes = [IsAuthenticated]
+
+
 
     
