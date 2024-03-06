@@ -6,5 +6,6 @@ class News(models.Model):
     author = models.CharField(max_length=128)
     url = models.TextField()
     url_to_image = models.TextField(name='urlToImage')
-    published_at = models.DateTimeField(name= ' publishedAt')
+    image = models.ImageField(upload_to = 'photos' , null = True)
+    published_at = models.DateTimeField(name= 'publishedAt')
 

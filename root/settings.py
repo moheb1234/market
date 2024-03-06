@@ -69,6 +69,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'root.urls'
 APPEND_SLASH = False
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 TEMPLATES = [
     {
@@ -107,17 +109,17 @@ DATABASES = {
 
         # 'PORT': '5432',
 
-        # 'ENGINE': 'django.db.backends.mysql', 
+        'ENGINE': 'django.db.backends.mysql', 
 
-        # 'NAME': 'market',
+        'NAME': 'market',
 
-        # 'USER': 'root',
+        'USER': 'root',
 
-        # 'PASSWORD': 'password',
+        'PASSWORD': 'password',
 
-        # 'HOST': 'localhost',
+        'HOST': 'localhost',
 
-        # 'PORT': '3306',
+        'PORT': '3306',
 
         
         # 'ENGINE': 'django.db.backends.mysql', 
