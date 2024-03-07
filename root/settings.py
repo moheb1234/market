@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
 
     # local
     'strategy.apps.StrategyConfig',
@@ -51,7 +54,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'exchange.apps.ExchangeConfig',
     'package.apps.PackageConfig',
-    'news.apps.NewsConfig'
+    'news.apps.NewsConfig',
 ]
 
 AUTH_USER_MODEL = "users.Users"
@@ -83,6 +86,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -185,17 +190,35 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ACTIVATE_JWT = True
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=50,hours=10),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '405276495495-d7i7f6potj5tv3s8lpnv118pf8l0k56h.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  
+        'drf_social_oauth2.authentication.SocialAuthentication',
     )
 }
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'drf_social_oauth2.backends.DjangoOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 try:
     from .local_settings import *

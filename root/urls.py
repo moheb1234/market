@@ -12,4 +12,5 @@ urlpatterns = [
     path('bot/', include('bot.urls')),
     path('export/', include('export.urls')),
     path('news/', include('news.urls')),
+    path('social-auth/', include('drf_social_oauth2.urls')),
 ] +static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
