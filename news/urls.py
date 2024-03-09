@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('list-create' , views.NewsListCreateApiView.as_view() , name = 'news-list-create')
+    path('save/<str:category>' , views.NewsBulkSaveApiView.as_view() , name = 'news-save') ,
+    path('fetch/<str:category>' , views.NewsListApiView.as_view() , name = 'news-fetch')
 ]
