@@ -36,6 +36,10 @@ class BotSerializer(serializers.ModelSerializer):
             if not 'end_date' in data.keys():
                 raise serializers.ValidationError({'end_date' : 'this field is required'})
         elif bot_type == 'trade':
+            if 'start_date' in data.keys():
+                data['start_date'] = None
+            if 'end_date' in data.keys():
+                data['end_date'] = None
             return data
         else :
             raise NotFound({'detail' : 'url address is wrong'})
@@ -87,4 +91,6 @@ class BotSerializer(serializers.ModelSerializer):
         bot = bot_create(**validated_data)
         # self.send_bot_data(bot)
         return bot
+    
+    
         
