@@ -1,7 +1,8 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Bot
-from .serializers import BotSerializer
+from .permissions import IsBotOwner
+from .serializers import BotSerializer , BotEventSerializer
 from rest_framework.exceptions import NotFound
 
 
@@ -17,4 +18,14 @@ class BotCreateApiView(generics.ListCreateAPIView):
             return Bot.objects.filter(strategy__user = self.request.user , start_date__isnull= False , end_date__isnull= False)
         else :
             raise NotFound({'detail' : 'url not found'})
+
+class BotRetrieveUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = BotSerializer
+    permission_classes = [IsAuthenticated , IsBotOwner]
+    queryset = Bot.objects.all()
+
+class BotEventApiView(generics.UpdateAPIView):
+    serializer_class = BotEventSerializer
+    permission_classes = [IsAuthenticated , IsBotOwner]
+    queryset = Bot.objects.all()
 

@@ -29,22 +29,23 @@ class BotSerializer(serializers.ModelSerializer):
         'strategy' , 'market_accounts' , 'asset_name']
 
     def validate(self , data):
-        bot_type = self.context['view'].kwargs['bot_type']
-        if bot_type == 'back-test':
-            if not 'start_date' in data.keys():
-                raise serializers.ValidationError({'start_date' : 'this field is required'})
-            if not 'end_date' in data.keys():
-                raise serializers.ValidationError({'end_date' : 'this field is required'})
-        elif bot_type == 'trade':
-            if 'start_date' in data.keys():
-                data['start_date'] = None
-            if 'end_date' in data.keys():
-                data['end_date'] = None
-            return data
-        else :
-            raise NotFound({'detail' : 'url address is wrong'})
-
-            
+        try:
+            bot_type = self.context['view'].kwargs['bot_type']
+            if bot_type == 'back-test':
+                if not 'start_date' in data.keys():
+                    raise serializers.ValidationError({'start_date' : 'this field is required'})
+                if not 'end_date' in data.keys():
+                    raise serializers.ValidationError({'end_date' : 'this field is required'})
+            elif bot_type == 'trade':
+                if 'start_date' in data.keys():
+                    data['start_date'] = None
+                if 'end_date' in data.keys():
+                    data['end_date'] = None
+                return data
+            else :
+                raise NotFound({'detail' : 'url address is wrong'})
+        except KeyError : 
+            pass
         return data
 
     def validate_trade_market(self , value):
@@ -70,12 +71,15 @@ class BotSerializer(serializers.ModelSerializer):
             ret['classification'] = None
         else :
             ret['classification'] = json.loads(instance.classification)
-        bot_type = self.context['view'].kwargs['bot_type']
-        if bot_type == 'trade':
-            if 'start_date' in ret.keys():
-                ret.pop('start_date')
-            if 'end_date' in ret.keys():
-                ret.pop('end_date') 
+        try:
+            bot_type = self.context['view'].kwargs['bot_type']
+            if bot_type == 'trade':
+                if 'start_date' in ret.keys():
+                    ret.pop('start_date')
+                if 'end_date' in ret.keys():
+                    ret.pop('end_date') 
+        except KeyError :
+            pass
         return ret
 
     # send bot data to indicator 
@@ -92,5 +96,25 @@ class BotSerializer(serializers.ModelSerializer):
         # self.send_bot_data(bot)
         return bot
     
+    def update(self , instance , validated_data):
+        pk = instance.id
+        instance.delete()
+        validated_data['id'] = pk
+        return bot_create(**validated_data)
+
+
+class BotEventSerializer(serializers.Serializer):
+    command = serializers.CharField(write_only=True)
+    message = serializers.CharField(read_only=True)
+    def update(self , instance , validated_data):
+        command = validated_data['command']
+        if command == 'start':
+            pass
+        elif command == 'stop':
+            pass
+        else:
+            raise serializers.ValidationError({'detail' : 'command must be start or stop'})
+        validated_data['message'] = 'The command was sent'
+        return validated_data
     
         
