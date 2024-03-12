@@ -1,12 +1,13 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password, check_password
-from .models import Users
+from .models import Users , Profile
 from rest_framework.exceptions import  AuthenticationFailed , PermissionDenied , NotFound
 from .email import send_verify_code
 from .exceptions import Server_Error
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework_simplejwt.tokens import AccessToken
 import random
+from django.db.models import Q
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -55,13 +56,13 @@ class UserVerifyEmailSerializer(serializers.Serializer):
 
 
 class UserLoginSerializer(serializers.Serializer):
-    username = serializers.CharField(write_only=True )
+    username_or_email = serializers.CharField(write_only=True )
     password = serializers.CharField(write_only=True )
     token = serializers.CharField(read_only=True )
 
     def create(self , validated_data):
         try:
-            user = Users.objects.get(username= validated_data['username'])
+            user = Users.objects.get(Q(username= validated_data['username_or_email']) | Q(email = validated_data['username_or_email']))
             if not check_password(validated_data['password'] , user.password):
                 raise AuthenticationFailed(detail={'detail':'password is wrong'})
             token = AccessToken.for_user(user)
@@ -72,17 +73,16 @@ class UserLoginSerializer(serializers.Serializer):
         except ObjectDoesNotExist:
             raise NotFound(detail= {'detail':'no user founded'})
 
-
-
-class UserEditPersonalInfoSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(slug_field='username' , read_only= True)
 
     class Meta:
-        model = Users
-        fields = ['phone_number','passport_number','card','photo','birthday','country','city' ]
+        model = Profile
+        fields = '__all__'
 
-    def update(self , instance , validated_data):
-        Users.objects.filter(pk = instance.id).update(**validated_data)
-        return validated_data
+    # def update(self , instance , validated_data):
+    #     Users.objects.filter(pk = instance.id).update(**validated_data)
+    #     return validated_data
 
 
         

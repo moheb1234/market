@@ -1,8 +1,9 @@
 from rest_framework import generics
-from .models import Users
+from .models import Users , Profile
 from .serializers import *
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsProfileOwner
 
 
 class UserRegisterApiView(generics.CreateAPIView):
@@ -19,13 +20,11 @@ class UserLoginApiView(generics.CreateAPIView):
     queryset = Users.objects.all()
 
 
-class UserPersonalInfoApiView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserEditPersonalInfoSerializer
-    permission_classes = [IsAuthenticated]
-    queryset = Users.objects.all()
+class ProfileApiView(generics.RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated , IsProfileOwner]
+    queryset = Profile.objects.all()
 
-    def get_object(self):
-        return self.request.user
     
 
 
