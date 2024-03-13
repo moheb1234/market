@@ -30,14 +30,22 @@ class Signal(models.Model):
     wallet_amount = models.FloatField()
 
 class Support(models.Model):
-    user = models.OneToOneField(to= Users , on_delete= models.CASCADE)
     name = models.CharField(max_length=16)
     email = models.EmailField()
     message = models.TextField()
 
-# class Hire(models.Model):
-#     user = models.OneToOneField(to= Users , on_delete= models.CASCADE)
-#     object_type = models.CharField(max_length=16  , default = 'hire')  # or represent us
+class Hire(models.Model):
+    object_type = models.CharField(max_length=16  , default = 'hire')  # or represent us
+    name = models.CharField(max_length=64)
+    email = models.EmailField()
+    job_title = models.CharField(max_length=64)
+    country = models.CharField(max_length=32)
+    city = models.CharField(max_length=32)
+    cv = models.FileField(upload_to='cv' )
+    descriptions = models.TextField()
+    passport_number = models.ImageField(upload_to = 'passport_number')
+    self_photo = models.ImageField(upload_to = 'self_photo')
+
 
 
 

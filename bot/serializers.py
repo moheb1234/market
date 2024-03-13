@@ -7,6 +7,7 @@ from .managers import bot_create
 import requests
 import json
 from rest_framework.exceptions import NotFound
+ 
 
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -21,11 +22,13 @@ class BotSerializer(serializers.ModelSerializer):
     trade_market = serializers.ListField()
     spread = serializers.ListField(required=False)
     classification = serializers.ListField(required = False)
+    start_date = serializers.CharField(required= False )
+    end_date = serializers.CharField(required= False )
     class Meta:
         model = Bot
         fields = ['id' ,'name' , 'description' , 'image' , 'trade_market', 'order_type' , 'order_timeout'
          , 'spread' , 'classification' ,'leverage' , 'order_amount' , 'stop_loss' 
-        ,'take_profit' , 'watch_dog' , 'max_open_position_after_trend' , 'start_date' , 'end_date' ,
+        ,'take_profit' , 'watchdog' , 'max_open_position_after_trend' , 'start_date' , 'end_date' ,
         'strategy' , 'market_accounts' , 'asset_name']
 
     def validate(self , data):
@@ -60,8 +63,6 @@ class BotSerializer(serializers.ModelSerializer):
     
     def to_representation(self , instance):
         ret = super(BotSerializer , self).to_representation(instance)
-        ret['strategy'] = StrategySerializer(instance= instance.strategy).data
-        ret['market_accounts'] = ExchangeSerializer(instance= instance.market_accounts , many = True).data
         ret['trade_market'] = json.loads(instance.trade_market)
         if instance.spread == None:
             ret['spread'] = None
@@ -92,6 +93,8 @@ class BotSerializer(serializers.ModelSerializer):
             raise Server_Error()
  
     def create(self , validated_data):
+        bot_type = self.context['view'].kwargs['bot_type']
+        validated_data['bot_type'] = bot_type
         bot = bot_create(**validated_data)
         # self.send_bot_data(bot)
         return bot

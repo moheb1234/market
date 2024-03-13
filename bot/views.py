@@ -12,12 +12,8 @@ class BotCreateApiView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         bot_type = self.kwargs['bot_type']
-        if bot_type == 'trade':
-            return Bot.objects.filter(strategy__user = self.request.user , start_date= None , end_date= None)
-        elif bot_type == 'back-test':
-            return Bot.objects.filter(strategy__user = self.request.user , start_date__isnull= False , end_date__isnull= False)
-        else :
-            raise NotFound({'detail' : 'url not found'})
+        return Bot.objects.filter(strategy__user = self.request.user  , bot_type= bot_type)
+        
 
 class BotRetrieveUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BotSerializer
