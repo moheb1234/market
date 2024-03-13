@@ -30,14 +30,14 @@ class Signal(models.Model):
     wallet_amount = models.FloatField()
 
 class Support(models.Model):
-    name = models.CharField(max_length=16)
-    email = models.EmailField()
+    name = models.CharField(max_length=16 , unique=True)
+    email = models.EmailField(unique= True)
     message = models.TextField()
 
 class Hire(models.Model):
     object_type = models.CharField(max_length=16  , default = 'hire')  # or represent us
-    name = models.CharField(max_length=64)
-    email = models.EmailField()
+    name = models.CharField(max_length=64 , unique=True)
+    email = models.EmailField(unique= True)
     job_title = models.CharField(max_length=64)
     country = models.CharField(max_length=32)
     city = models.CharField(max_length=32)

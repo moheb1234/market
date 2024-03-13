@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .models import Users , Profile
+from .models import *
 from .serializers import *
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
@@ -24,6 +24,15 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated , IsProfileOwner]
     queryset = Profile.objects.all()
+
+
+class HireListCreateApiView(generics.ListCreateAPIView):
+    serializer_class = HireSerializer
+    queryset = Hire.objects.all()
+
+class SupportListCreateApiView(generics.ListCreateAPIView):
+    serializer_class = SupportSerializer
+    queryset = Support.objects.all()
 
     
 
