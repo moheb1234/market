@@ -114,30 +114,30 @@ DATABASES = {
 
         # 'PORT': '5432',
 
-        # 'ENGINE': 'django.db.backends.mysql', 
-
-        # 'NAME': 'market',
-
-        # 'USER': 'root',
-
-        # 'PASSWORD': 'password',
-
-        # 'HOST': 'localhost',
-
-        # 'PORT': '3306',
-
-        
         'ENGINE': 'django.db.backends.mysql', 
 
         'NAME': 'market',
 
         'USER': 'root',
 
-        'PASSWORD': 'CZ8nrZqA1dURJIAugEDHlXm3',
+        'PASSWORD': 'password',
 
-        'HOST': 'damavand.liara.cloud',
+        'HOST': 'localhost',
 
-        'PORT': '34575',
+        'PORT': '3306',
+
+        
+        # 'ENGINE': 'django.db.backends.mysql', 
+
+        # 'NAME': 'market',
+
+        # 'USER': 'root',
+
+        # 'PASSWORD': 'CZ8nrZqA1dURJIAugEDHlXm3',
+
+        # 'HOST': 'damavand.liara.cloud',
+
+        # 'PORT': '34575',
 
     }
 }
