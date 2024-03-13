@@ -12,7 +12,7 @@ class ExchangeSerializer(serializers.ModelSerializer):
     def create(self , validated_data):
         user =  self.context['request'].user
         validated_data['user'] = user
-        is_exist = Exchange.objects.filter(account_name=validated_data['account_name'] # check account name and exchange name unique together
+        is_exist = Exchange.objects.filter(user= user , account_name=validated_data['account_name'] # check account name and exchange name unique together
         , exchange_name= validated_data['exchange_name']).exists()
         if is_exist:
             raise serializers.ValidationError({'detail':'account name and exchange name must be unique together'})

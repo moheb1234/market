@@ -14,15 +14,8 @@ import json
 
 def bot_create(**validated_data):
 
-    # try:
-    #     strategy = Strategy.objects.get(pk = validated_data['strategy_id'])
-    # except ObjectDoesNotExist:
-    #     raise NotFound(detail={'detail':'no strategy founded'})
-
     exchanges = validated_data['market_accounts']
     del validated_data['market_accounts']
-    
-    # validated_data['strategy'] = strategy
 
 
     asset_list_names = json.loads(json.dumps((validated_data['asset_name'])))
