@@ -9,6 +9,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.exceptions import NotFound , ValidationError
 import json
 
+from rest_framework.exceptions import PermissionDenied
+
 
 
 
@@ -20,6 +22,20 @@ def bot_create(**validated_data):
 
     asset_list_names = json.loads(json.dumps((validated_data['asset_name'])))
     del validated_data['asset_name']
+
+    strategy = validated_data['strategy']
+
+    print(strategy.user)
+    print(validated_data['user'])
+    #check strategy owner
+    if strategy.user != validated_data['user']:
+        raise PermissionDenied({'detail' : 'this strategy is not for you'})
+
+    #check exchanges owner
+    for exchange in exchanges:
+        if exchange.user != validated_data['user']:
+            raise PermissionDenied({'detail' : f'you have not permission to use exchange {exchange.id}'})
+      
 
     bot = Bot.objects.create(**validated_data)
 

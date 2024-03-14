@@ -1,9 +1,10 @@
 from django.db import models
 from strategy.models import Strategy 
 from exchange.models import Exchange
-
+from users.models import Users
 
 class Bot(models.Model):
+    user = models.ForeignKey(Users , on_delete=models.CASCADE)
     market_accounts = models.ManyToManyField(to= Exchange)
     strategy = models.ForeignKey(to= Strategy , on_delete= models.CASCADE )
     bot_type = models.CharField(max_length=16)
