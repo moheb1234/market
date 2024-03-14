@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password, check_password
-from .models import Users , Profile , Hire ,Support ,Signal
+from .models import Users , Profile 
 from rest_framework.exceptions import  AuthenticationFailed , PermissionDenied , NotFound
 from .email import send_verify_code
 from .exceptions import Server_Error
@@ -80,22 +80,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
-class SupportSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Support
-        fields = '__all__'
-
-    def create(self , validated_data):
-        return Support.objects.create(**validated_data)
-
-
-class HireSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Hire
-        exclude = ['object_type']
-
-    def create(self , validated_data):
-        return Hire.objects.create(**validated_data)
 
         
         

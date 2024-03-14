@@ -26,15 +26,6 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
     queryset = Profile.objects.all()
 
 
-class HireListCreateApiView(generics.ListCreateAPIView):
-    serializer_class = HireSerializer
-    queryset = Hire.objects.all()
-
-class SupportListCreateApiView(generics.ListCreateAPIView):
-    serializer_class = SupportSerializer
-    queryset = Support.objects.all()
-
-    
 
 
     

@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'exchange.apps.ExchangeConfig',
     'package.apps.PackageConfig',
     'news.apps.NewsConfig',
+    'contact.apps.ContactConfig',
 ]
 
 AUTH_USER_MODEL = "users.Users"
