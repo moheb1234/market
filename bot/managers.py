@@ -11,6 +11,8 @@ import json
 
 from rest_framework.exceptions import PermissionDenied
 
+from django.db import IntegrityError
+
 
 
 
@@ -25,8 +27,7 @@ def bot_create(**validated_data):
 
     strategy = validated_data['strategy']
 
-    print(strategy.user)
-    print(validated_data['user'])
+
     #check strategy owner
     if strategy.user != validated_data['user']:
         raise PermissionDenied({'detail' : 'this strategy is not for you'})
@@ -36,8 +37,10 @@ def bot_create(**validated_data):
         if exchange.user != validated_data['user']:
             raise PermissionDenied({'detail' : f'you have not permission to use exchange {exchange.id}'})
       
-
-    bot = Bot.objects.create(**validated_data)
+    try:
+        bot = Bot.objects.create(**validated_data)
+    except IntegrityError : 
+        raise ValidationError({'detail' : 'bot name is duplicate please chose an other name'})
 
     for exchange in exchanges:
         bot.market_accounts.add(exchange)

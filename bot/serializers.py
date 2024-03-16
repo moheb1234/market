@@ -30,6 +30,9 @@ class BotSerializer(serializers.ModelSerializer):
         ,'take_profit' , 'watchdog' , 'max_open_position_after_trend' , 'start_date' , 'end_date' ,
         'strategy' , 'market_accounts' , 'asset_name']
         read_only_fields = ['user']
+        extra_kwargs = {
+            'strategy': {'required' : True , 'allow_null' : False}
+            }
 
     def required_dates(self ,data):
         try:

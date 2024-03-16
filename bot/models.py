@@ -6,7 +6,7 @@ from users.models import Users
 class Bot(models.Model):
     user = models.ForeignKey(Users , on_delete=models.CASCADE)
     market_accounts = models.ManyToManyField(to= Exchange)
-    strategy = models.ForeignKey(to= Strategy , on_delete= models.CASCADE )
+    strategy = models.ForeignKey(to= Strategy , on_delete= models.SET_NULL  , null= True , related_name= 'bots' )
     bot_type = models.CharField(max_length=16)
     name = models.CharField(max_length=100 , blank=False)
     description = models.TextField(null=True)
@@ -24,6 +24,9 @@ class Bot(models.Model):
     max_open_position_after_trend = models.FloatField()
     start_date = models.CharField(max_length= 64 ,null=True)
     end_date = models.CharField(max_length= 64,null=True) 
+
+    class Meta:
+        unique_together = ['user' , 'name']
 
 
 class Asset(models.Model):

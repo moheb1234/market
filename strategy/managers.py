@@ -58,7 +58,8 @@ def strategy_create( **validated_data ):
 
         try:
             strategy =  Strategy.objects.create(**validated_data)
-        except IntegrityError:
+        except IntegrityError as i:
+            print(i)
             raise ValidationError({'detail':'strategy name is duplicate please chose an other name'})
         if len(open_indicators) > 0:
             for open_ind in open_indicators:
