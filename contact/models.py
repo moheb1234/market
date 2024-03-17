@@ -2,8 +2,8 @@ from django.db import models
 from users.models import Users
 
 class Signal(models.Model):
-    user = models.OneToOneField(to= Users , on_delete= models.CASCADE)
-    object_type = models.CharField(max_length=16 , default='signal') # or partner with us
+    user = models.ForeignKey(to= Users , on_delete= models.CASCADE)
+    object_type = models.CharField(max_length=16 ) # or partner with us
     telegram_id = models.CharField(max_length=32)
     time_for_signal = models.CharField(max_length=128)
     favorite_asset_names = models.TextField()
