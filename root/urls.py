@@ -10,7 +10,7 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('exchange/', include('exchange.urls')),
     path('bot/', include('bot.urls')),
-    path('export/', include('export.urls')),
+    path('trade/', include('trade.urls')),
     path('news/', include('news.urls')),
     path('social-auth/', include('drf_social_oauth2.urls')),
     path('contact/', include('contact.urls')),

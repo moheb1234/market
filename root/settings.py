@@ -50,12 +50,12 @@ INSTALLED_APPS = [
     'strategy.apps.StrategyConfig',
     'indicator.apps.IndicatorConfig',
     'bot.apps.BotConfig',
-    'export.apps.ExportConfig',
     'users.apps.UsersConfig',
     'exchange.apps.ExchangeConfig',
     'package.apps.PackageConfig',
     'news.apps.NewsConfig',
     'contact.apps.ContactConfig',
+    'trade.apps.TradeConfig',
 ]
 
 AUTH_USER_MODEL = "users.Users"
